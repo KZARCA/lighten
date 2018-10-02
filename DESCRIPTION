@@ -1,0 +1,18 @@
+Package: lighten
+Type: Package
+Title: Pubmed toolkit to make a lighten decision for a journal submission choice
+Version: 0.1.0
+Author: Kevin Zarca
+Maintainer: kevin.zarca@gmail.com
+Description: Scraps pubmed, create dataframes and analyses data.
+License: GPL3
+Encoding: UTF-8
+LazyData: true
+Imports:
+    rvest (>= 0.2),
+    xml2 (>= 1.2),
+    stringr(>= 1.3),
+    purrr(>= 0.2.4),
+    dplyr(>= 0.7),
+    httr(>= 1.3)
+RoxygenNote: 6.0.1
