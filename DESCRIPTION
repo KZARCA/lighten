@@ -3,7 +3,7 @@ Type: Package
 Title: Pubmed toolkit to make a lighten decision for a journal submission choice
 Version: 0.1.0
 Author: Kevin Zarca
-Maintainer: kevin.zarca@gmail.com
+Maintainer: <kevin.zarca@gmail.com>
 Description: Scraps pubmed, create dataframes and analyses data.
 License: GPL3
 Encoding: UTF-8
