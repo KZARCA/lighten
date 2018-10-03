@@ -5,7 +5,9 @@ output: html_notebook
 
 
 ```{r}
+a <- Sys.time()
 tbl <- get_all_articles_tbl('101623795')
+print(Sys.time()-a)
 ```
 
 

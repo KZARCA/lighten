@@ -38,34 +38,29 @@ get_article_meta <- function(article_id){
       })
     })
   }
-    return(meta[[1]]) #couuldn't find anything more intuitive
+    return(meta[[1]]) #couldn't find anything more intuitive
 }
 
 get_article_history <- function(meta){
   milestones <- c("received", "accepted", "pubmed")
-  html_nodes(meta, "History") %>%
-    map(function(x){
-      map_chr(milestones, function(y){
-        dates <- html_node(x, sprintf("PubMedPubDate[PubStatus='%s']", y))
-        if (!is.na(dates)){
-          Y <- html_node(dates, "Year") %>%
-            html_text()
-          m <- html_node(dates, "Month") %>%
-            html_text() %>%
-            as.numeric() %>%
-            formatC(width=2, flag="0")
-          d <- html_node(dates, "Day") %>%
-            html_text() %>%
-            as.numeric() %>%
-            formatC(width=2, flag="0")
-          paste(Y, m, d, sep = "-")
-        } else {
-          NA_character_
-        }
-      }) %>% setNames(milestones)
-    }) %>%
-    reduce(rbind) %>%
-    as_tibble()
+  history <- html_nodes(meta, "History")
+  map(milestones, function(x){
+         xpath <- sprintf(".//PubMedPubDate[@PubStatus='%s']", x)
+         dates <- xml_find_first(history, xpath)
+         Y <- xml_find_first(dates, ".//Year") %>%
+           html_text()
+         m <- xml_find_first(dates, ".//Month") %>%
+           html_text() %>%
+           as.numeric() %>%
+           formatC(width=2, flag="0")
+         d <- xml_find_first(dates, ".//Day") %>%
+           html_text() %>%
+           as.numeric() %>%
+           formatC(width=2, flag="0")
+         ifelse(!is.na(Y), paste(Y, m, d, sep = "-"), NA)
+  }) %>%
+    setNames(milestones) %>%
+    dplyr::as_tibble()
 }
 
 get_article_mesh <- function(meta){
