@@ -22,7 +22,7 @@ get_journal_articles <- function(journal_id, retmax){
 
 get_article_meta <- function(article_id){
   chunks <- split(article_id, ceiling(seq_along(article_id)/100))
-  meta <<- map(chunks, function(x){
+  meta <- map(chunks, function(x){
     Sys.sleep(2)
     uids <- paste(x, collapse = ",")
     paste0("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=", uids) %>%
@@ -65,11 +65,12 @@ get_article_history <- function(meta){
 
 get_article_mesh <- function(meta){
   article <- html_nodes(meta, "PubmedArticle")
-  map(article, function(x){
-    mesh_list <- html_node(x, "MeshHeadingList")
-    if (is.na(mesh_list)) NULL
-    else mesh_list
-  })
+  xml_find_first(article, ".//MeshHeadingList")
+  # map(article, function(x){
+  #   mesh_list <- html_node(x, "MeshHeadingList")
+  #   if (is.na(mesh_list)) NULL
+  #   else mesh_list
+  # })
 }
 
 
