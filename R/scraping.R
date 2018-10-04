@@ -66,11 +66,6 @@ get_article_history <- function(meta){
 get_article_mesh <- function(meta){
   article <- html_nodes(meta, "PubmedArticle")
   xml_find_first(article, ".//MeshHeadingList")
-  # map(article, function(x){
-  #   mesh_list <- html_node(x, "MeshHeadingList")
-  #   if (is.na(mesh_list)) NULL
-  #   else mesh_list
-  # })
 }
 
 

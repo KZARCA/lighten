@@ -9,6 +9,7 @@
 #' @importFrom xml2 read_xml
 #' @importFrom xml2 xml_add_child
 #' @importFrom xml2 xml_children
+#' @importFrom xml2 xml_find_first
 #' @importFrom rvest html_node
 #' @importFrom rvest html_nodes
 #' @importFrom rvest html_table
@@ -25,10 +26,21 @@
 #' @importFrom purrr flatten_chr
 #' @importFrom purrr reduce
 #' @importFrom purrr map
-#' @importFrom purrr map_chr
 #' @importFrom stringr str_split
 #' @importFrom stringr str_split_fixed
 #' @importFrom stringr str_replace
 #' @importFrom stringr str_replace_all
 #' @importFrom stringr str_which
 NULL
+
+globs <- new.env()
+
+if (require("furrr")){
+  plan(multiprocess)
+  globs$map <- furrr::future_map
+  globs$imap <- furrr::future_imap
+} else {
+  globs$map <- purrr::map
+  globs$imap <- purrr::imap
+}
+

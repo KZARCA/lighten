@@ -3,11 +3,27 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r}
+a <- Sys.time()
+tbl <- get_all_articles_tbl('101623795') 
+print(Sys.time()-a)
+```
+
+
+
+## Prepare table with IF and SIGAPS scores
+```{r}
+NLMid <- read.table("journals_id.txt")[[1]]
+```
+
 
 ```{r}
 a <- Sys.time()
-tbl <- get_all_articles_tbl('101623795')
-print(Sys.time()-a)
+all_tables <- globs$imap(NLMid, function(x, y){
+  cat("#[", y, "] Journal ", x, '\n', sep = "")
+  get_all_articles_tbl(x)
+}, .progress = TRUE)
+print(Sys.time() - a)
 ```
 
 
