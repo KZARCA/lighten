@@ -16,5 +16,5 @@ Imports:
     httr(>= 1.3),
 Suggests:
     furrr
-Remotes: git::https://github.com/KZARCA/xml2
+Remotes: KZARCA/xml2
 RoxygenNote: 6.0.1
